@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: apm-server
+  datasource:
+    url: jdbc:postgresql://localhost:5432/apm_db
+    username: kyungmi
+    password:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+server:
+  port: 8080

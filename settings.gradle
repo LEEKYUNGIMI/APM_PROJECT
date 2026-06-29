@@ -1,2 +1,4 @@
 rootProject.name = 'apm-root'
 include 'apm-server'
+include 'apm-sdk'
+include 'simple-app'

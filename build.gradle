@@ -6,13 +6,16 @@ plugins {
 
 subprojects {
 	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
 
 	group = 'com.leekyungmi.apm'
 	version = '0.0.1-SNAPSHOT'
 
 	java {
-		sourceCompatibility = JavaVersion.VERSION_17
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(21)
+		}
 	}
 
 	repositories {
