@@ -8,4 +8,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface EventCustomRepository {
     Page<Event> search(EventSearch search, Pageable pageable);
+
+    double findAvgDurationsMs();
+
+    double findErrorRate();
 }

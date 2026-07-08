@@ -54,6 +54,26 @@ public class EventCustomRepositoryImpl implements EventCustomRepository{
         return new PageImpl<>(content, pageable, total);
     }
 
+    @Override
+    public double findAvgDurationsMs(){
+        QEvent e =  QEvent.event;
+        Double result = jpaQueryFactory
+                .select(e.durationMs.avg())
+                .from(e)
+                .fetchOne();
+        return result !=null ? result : 0.0;
+    }
+
+    @Override
+    public double findErrorRate(){
+        QEvent e =  QEvent.event;
+        Long total = jpaQueryFactory.select(e.count()).from(e).fetchOne();
+        if(total == null || total == 0){return 0.0;}
+
+        Long errorCount = jpaQueryFactory.select(e.count()).from(e).where(e.statusCode.goe(400)).fetchOne();
+        return errorCount !=null ? errorCount : 0.0;
+    }
+
     private BooleanExpression appIdEq(String appId){
         return StringUtils.hasText(appId) ? QEvent.event.appId.eq(appId):null;
     }
