@@ -23,10 +23,10 @@ public class ApmAutoConfig implements WebMvcConfigurer {
         this.apmEventSender = new ApmEventSender(apmServerUrl);
     }
 
-    @Bean(destroyMethod = "shutdown")
-    public ApmEventSender apmEventSender(@Value("${apm.server.url}") String apmServerUrl) {
-        return apmEventSender;
-    }
+//    @Bean(destroyMethod = "shutdown")
+//    public ApmEventSender apmEventSender(@Value("${apm.server.url}") String apmServerUrl) {
+//        return apmEventSender;
+//    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
