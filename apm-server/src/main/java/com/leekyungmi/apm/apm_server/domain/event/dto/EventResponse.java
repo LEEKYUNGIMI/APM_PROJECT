@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class EventResponse {
+    private Long id;
     private String appId;
     private EventType type;
     private String uri;
@@ -22,6 +23,7 @@ public class EventResponse {
 
     public static EventResponse from(Event event) {
         return EventResponse.builder()
+                .id(event.getId())
                 .appId(event.getAppId())
                 .type(event.getType())
                 .uri(event.getUri())
