@@ -1,6 +1,25 @@
-*.iml
-.idea/
-**/build/
-.gradle/
+# macOS / Editor
 .DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Logs / temp
+*.log
+*.tmp
+cache/
+
+# 작업 데이터 — 로컬 전용 (폴더 구조만 추적)
+tasks/*
+!tasks/.gitkeep
+
+# 프로젝트 특화 교훈 — 로컬 전용
+_local/*
+!_local/.gitkeep
+
+# 로컬 IDE MCP 설정
 .mcp.json
+
+# knot-vault — 별도 로컬 git 저장소 (drain.sh가 실패 시 git reset --hard 하므로 분리)
+/knot-vault/

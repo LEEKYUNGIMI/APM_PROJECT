@@ -12,7 +12,7 @@ allowed-tools: Read, Glob, Grep, Write, Bash(ls:*), Bash(find:*), Bash(mkdir:*)
 - `$1` 산출물종류 (필수): `api` | `table` | `program` | `test` | `screen` | `all`
   - 한글 별칭 허용: `API명세서`, `테이블정의서`, `프로그램목록`, `단위테스트케이스`, `화면정의서`, `전체`
 - `$2` 대상 (선택, 기본값 `all`): 모듈명(`apm-server`, `apm-sdk`, `apm-dashboard`, `simple-app`) 또는 도메인명(예: `event`)
-- `$3` 출력경로 (선택, 기본값 `docs/deliverables`)
+- `$3` 출력경로 (선택, 기본값 `apm-root/docs/deliverables`)
 
 `$1`이 비어 있거나 위 값에 해당하지 않으면 산출물을 만들지 말고 사용법만 출력하고 종료한다:
 
@@ -20,7 +20,7 @@ allowed-tools: Read, Glob, Grep, Write, Bash(ls:*), Bash(find:*), Bash(mkdir:*)
 사용법: /dev-doc <산출물종류> [대상] [출력경로]
   예) /dev-doc api apm-server
       /dev-doc table event
-      /dev-doc all all docs/deliverables
+      /dev-doc all all apm-root/docs/deliverables
 ```
 
 ## 공통 규칙
@@ -75,7 +75,7 @@ allowed-tools: Read, Glob, Grep, Write, Bash(ls:*), Bash(find:*), Bash(mkdir:*)
   - `결과` 컬럼은 비워둔다 (수행 시 기입)
 
 ### `screen` → `화면정의서.md`
-- 대상: `apm-dashboard/src` (React 컴포넌트)
+- 대상: `apm-root/apm-dashboard/src` (React 컴포넌트)
 - 화면 목록표: | No | 화면ID | 화면명 | 컴포넌트 | 설명 |
 - 화면별 상세:
   - 구성요소 표: | No | 항목명 | 유형(입력/버튼/표/차트 등) | 설명 | 연계 API |
