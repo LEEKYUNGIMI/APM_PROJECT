@@ -23,7 +23,8 @@
 │   └── — (전담 워커 없음 → Orchestrator 직접)
 │
 ├── [reviewer] 산출물 리뷰 / 비판적 검증?
-│   └── claude-reviewer   (Sonnet 5 · 읽기 전용)
+│   ├── apm-root 코드 변경 → review-expert (Sonnet 5 · 읽기 전용 · APM 도메인 체크)
+│   └── 그 외(설계 문서·계획 등) → claude-reviewer   (Sonnet 5 · 읽기 전용)
 │
 ├── [multimodal] 이미지 · 스크린샷 분석 / 50페이지+ 문서?
 │   └── — (전담 워커 없음 → Orchestrator 직접)

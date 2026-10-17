@@ -21,6 +21,7 @@ apm-orchestrator/          ← 여기서 claude 실행 (Orchestrator 루트)
 | `apm-root/apm-dashboard/` | React 19 · TypeScript · Vite · Recharts | `dashboard-expert` | `apm-dashboard-web` | `apm-root/apm-dashboard/docs/ai/` |
 | `apm-root/simple-app/` | SDK 데모 앱 (포트 8081) | `sdk-expert` | `apm-sdk-core` | `apm-root/simple-app/docs/ai/` |
 | (모듈 간) | 이벤트 JSON 계약 | — | `apm-event-contract` | — |
+| (코드 리뷰) | apm-root 변경 전체 | `review-expert` (승인 필요) | 위 스킬 전부 참조 | — |
 
 - 모듈 작업 전에 해당 모듈의 `docs/ai/README.md`(하네스 문서)를 먼저 읽는다.
 - 빌드: `apm-root/gradlew -p apm-root :<모듈>:compileJava` · 테스트: `apm-root/gradlew -p apm-root :apm-sdk:test` · 대시보드: `cd apm-root/apm-dashboard && npm run build`
@@ -36,7 +37,8 @@ Orchestrator (Claude Code session, internal reasoning)
 │   └── [engineer·computer-use·multimodal] 전담 워커 없음 → Orchestrator 직접 수행 (구현 · 테스트 · 브라우저 · 이미지/긴 문서)
 └── Worker Pool (모두 별도 모델 호출 — 승인 필요)
     ├── claude-main      [strategist] 기획 · 설계 · 아키텍처 · 전략 · 디자인 방향 · 문체 글쓰기 · 디버깅 원인 분석
-    └── claude-reviewer  [reviewer] 산출물 리뷰·비평 (Sonnet 5 · 읽기 전용)
+    ├── claude-reviewer  [reviewer] 산출물 리뷰·비평 (Sonnet 5 · 읽기 전용)
+    └── review-expert    [reviewer · apm-root 코드 전용] Google 리뷰 가이드 + APM 계약·SDK 안전성·OTel 대비 (Sonnet 5 · 읽기 전용)
 ```
 
 능력 슬롯 → 워커 배정의 정본은 `_shared/capability-profile.md`(가변층 — 신모델 출시 시 프로필만 갱신).
@@ -175,6 +177,7 @@ wc -w tasks/<task>/context.md   # 영문 단어수
 |--------|------------|--------------|
 | claude-main | ❌ Orchestrator 경유 | ❌ |
 | claude-reviewer | ❌ Orchestrator 경유 (읽기 전용 · 쓰기 도구 없음) | ❌ |
+| review-expert | ❌ Orchestrator 경유 (읽기 전용 · 쓰기 도구 없음) | ❌ |
 
 현재 풀에 파일을 직접 쓰는 worker는 없다. 구현·외부 repo 수정은 Orchestrator가 직접 수행하며, 그 경우 작업 `task.md` Constraints 에 `write_scope` 를 적고 결정을 `log.md` `[DECISION]` 에 남긴다. 아래 값 정의·4조건은 직접 쓰기 worker를 다시 추가할 때의 계약이다(`gate.sh` G5 집행 유지).
 

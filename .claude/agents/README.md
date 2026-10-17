@@ -11,6 +11,7 @@
 |------|------|------|
 | `claude-main.md` | `claude-main` | strategist — 기획·설계·원인 분석 (파일 쓰기 없음) |
 | `claude-reviewer.md` | `claude-reviewer` | reviewer — 산출물 리뷰 (읽기 전용) |
+| `review-expert.md` | `review-expert` | reviewer — apm-root 코드 리뷰 (Google 리뷰 가이드 + APM·OTel 체크, 읽기 전용) |
 
 engineer 슬롯(구현)은 전담 워커 없이 Orchestrator가 직접 하거나 아래 도메인 서브에이전트에 위임한다.
 도메인 전문성은 슬롯이 아니므로 이 계층에 넣지 않는다.

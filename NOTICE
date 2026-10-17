@@ -47,3 +47,31 @@ MIT License notice for the borrowed guidelines text:
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
+
+
+Code Review Checklist (review-expert agent)
+-------------------------------------------
+
+`.claude/agents/review-expert.md` contains review criteria summarized and
+restructured (adapted, not verbatim) from the following sources:
+
+  - Google Engineering Practices — "Code Review Developer Guide"
+    ("What to look for in a code review", "Nit:" severity convention)
+      Source:  https://github.com/google/eng-practices
+               https://google.github.io/eng-practices/review/reviewer/looking-for.html
+      Author:  Google LLC
+      License: Creative Commons Attribution 3.0 (CC BY 3.0)
+               https://creativecommons.org/licenses/by/3.0/
+      Changes: condensed into an 8-item checklist, merged Naming/Comments and
+               Style/Consistency, translated to Korean, combined with
+               project-specific (APM) checks.
+
+  - OpenTelemetry Specification (tracing concepts: span kind, context
+    propagation, database span guidance)
+      Source:  https://github.com/open-telemetry/opentelemetry-specification
+      License: Apache License 2.0
+      Use:     referenced as review criteria only; no text reproduced.
+
+  - W3C Trace Context (traceparent header format)
+      Source:  https://www.w3.org/TR/trace-context/
+      Use:     referenced as review criteria only; no text reproduced.
