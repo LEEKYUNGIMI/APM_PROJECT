@@ -19,10 +19,12 @@ const RANGE_OPTIONS: { label: string; value: number | null }[] = [
 ]
 
 const TYPE_OPTIONS: { label: string; value: EventType | '' }[] = [
-  { label: '전체 타입', value: '' },
+  { label: '요청 전체', value: '' },
   { label: 'HTTP_REQUEST', value: 'HTTP_REQUEST' },
-  { label: 'SLOW_QUERY', value: 'SLOW_QUERY' },
+  { label: 'SLOW_REQUEST', value: 'SLOW_REQUEST' },
   { label: 'ERROR', value: 'ERROR' },
+  { label: 'DB_QUERY', value: 'DB_QUERY' },
+  { label: 'HTTP_CLIENT', value: 'HTTP_CLIENT' },
 ]
 
 export function FilterBar({

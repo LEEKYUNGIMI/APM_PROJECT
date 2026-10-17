@@ -1,6 +1,7 @@
 package com.leekyungmi.apm.apm_server.domain.event.repository;
 
 import com.leekyungmi.apm.apm_server.domain.event.EventType;
+import com.leekyungmi.apm.apm_server.domain.event.dto.EventDurationStats;
 import com.leekyungmi.apm.apm_server.domain.event.dto.EventSearch;
 import com.leekyungmi.apm.apm_server.domain.event.entity.Event;
 
@@ -14,11 +15,11 @@ import java.util.Map;
 public interface EventCustomRepository {
     Page<Event> search(EventSearch search, Pageable pageable);
 
-    double findAvgDurationsMs(String appId, LocalDateTime from, LocalDateTime to);
-
-    double findErrorRate(String appId, LocalDateTime from, LocalDateTime to);
+    EventDurationStats findRequestDurationStats(String appId, LocalDateTime from, LocalDateTime to);
 
     Map<EventType, Long> countByType(String appId, LocalDateTime from, LocalDateTime to);
 
     List<String> findDistinctAppIds();
+
+    List<Event> findTraceSpans(String traceId);
 }

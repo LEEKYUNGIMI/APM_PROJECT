@@ -19,8 +19,11 @@ com.leekyungmi.apm.apm_server
 | 메서드 · 경로 | 설명 |
 |--------------|------|
 | `POST /api/events` | 이벤트 1건 저장 → id |
-| `GET /api/events` | `appId,type,uri,from,to,page,size` 검색 → `Page<EventResponse>` |
-| `GET /api/events/stats` | `appId,from,to` → 총 건수·평균 응답시간·에러율·타입별 건수 |
+| `POST /api/events/batch` | `EventRequest[]`(최대 1000, 초과 400) JdbcTemplate 배치 INSERT → `{received}` |
+| `GET /api/events` | `appId,type,uri,from,to,page,size` 검색 → `Page<EventResponse>`. `type` 미지정 시 요청 타입(HTTP_REQUEST·SLOW_REQUEST·ERROR)만 |
+| `GET /api/events/stats` | `appId,from,to` → 총 건수·평균·p95·p99·에러율(요청 타입만) + 타입별 건수(전 타입) |
+| `GET /api/events/timeseries` | `appId,from,to,bucketSeconds(기본 60)` → 버킷별 count·avg·p95·p99·errorCount (요청 타입만, 네이티브 SQL) |
+| `GET /api/traces/{traceId}` | trace의 전 span, `startTimeUs` 오름차순(null이면 `startTimeMs*1000`), 동률 id 오름차순 |
 | `GET /api/events/apps` | 앱 ID 목록 |
 
 ## 규약
@@ -33,6 +36,8 @@ com.leekyungmi.apm.apm_server
 
 - `ddl-auto: create` — 재시작하면 테이블을 다시 만들어 데이터가 사라진다.
 - 검색 정렬은 `occurredAt desc` 고정(`sort` 파라미터 무시).
-- 에러율은 `statusCode >= 400` 기준이라 `EventType.ERROR` 건수와 다를 수 있다.
+- 에러율 = `EventType.ERROR` 수 / 요청 타입 수 × 100 (statusCode 기준 아님).
+- 이벤트 1건 = span 1개(`traceId·spanId·parentSpanId·startTimeMs`, μs 정밀도 `startTimeUs·durationUs`는 nullable — 계약 이전 행은 null). 계약 정본은 `apm-event-contract` 스킬.
+- `EventRepositoryIntegrationTest`는 로컬 PostgreSQL의 `apm_test` 스키마를 쓴다. `ApmServerApplicationTests`는 `public` 스키마에 `ddl-auto: create`로 붙어 개발 데이터를 지운다.
 
 상세 규약: 오케스트레이터의 `apm-server-core` 스킬 · 모듈 간 계약: `apm-event-contract` 스킬

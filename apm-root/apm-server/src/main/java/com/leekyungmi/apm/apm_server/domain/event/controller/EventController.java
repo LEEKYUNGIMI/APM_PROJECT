@@ -1,9 +1,11 @@
 package com.leekyungmi.apm.apm_server.domain.event.controller;
 
+import com.leekyungmi.apm.apm_server.domain.event.dto.EventBatchResponse;
 import com.leekyungmi.apm.apm_server.domain.event.dto.EventRequest;
 import com.leekyungmi.apm.apm_server.domain.event.dto.EventResponse;
 import com.leekyungmi.apm.apm_server.domain.event.dto.EventSearch;
 import com.leekyungmi.apm.apm_server.domain.event.dto.EventStatsResponse;
+import com.leekyungmi.apm.apm_server.domain.event.dto.EventTimeseriesResponse;
 import com.leekyungmi.apm.apm_server.domain.event.service.EventService;
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +30,11 @@ public class EventController {
         return ResponseEntity.ok(eventService.save(eventRequest));
     }
 
+    @PostMapping("/batch")
+    public ResponseEntity<EventBatchResponse> createBatch(@RequestBody List<EventRequest> eventRequests){
+        return ResponseEntity.ok(eventService.saveAll(eventRequests));
+    }
+
     @GetMapping
     public ResponseEntity<Page<EventResponse>> search(EventSearch search, Pageable pageable){
         return ResponseEntity.ok(eventService.search(search, pageable));
@@ -39,6 +46,15 @@ public class EventController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to){
         return ResponseEntity.ok(eventService.getStats(appId, from, to));
+    }
+
+    @GetMapping("/timeseries")
+    public ResponseEntity<List<EventTimeseriesResponse>> timeseries(
+            @RequestParam(required = false) String appId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+            @RequestParam(defaultValue = "60") int bucketSeconds){
+        return ResponseEntity.ok(eventService.getTimeseries(appId, from, to, bucketSeconds));
     }
 
     @GetMapping("/apps")

@@ -20,6 +20,12 @@ public class EventResponse {
     private String message;
     private String serverIp;
     private LocalDateTime occurredAt;
+    private String traceId;
+    private String spanId;
+    private String parentSpanId;
+    private long startTimeMs;
+    private Long startTimeUs;
+    private Long durationUs;
 
     public static EventResponse from(Event event) {
         return EventResponse.builder()
@@ -33,6 +39,12 @@ public class EventResponse {
                 .message(event.getMessage())
                 .serverIp(event.getServerIp())
                 .occurredAt(event.getOccurredAt())
+                .traceId(event.getTraceId())
+                .spanId(event.getSpanId())
+                .parentSpanId(event.getParentSpanId())
+                .startTimeMs(event.getStartTimeMs())
+                .startTimeUs(event.getStartTimeUs())
+                .durationUs(event.getDurationUs())
                 .build();
     }
 }

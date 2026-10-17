@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import type { EventFilters, EventResponse, EventStatsResponse, PageResponse } from '../types'
+import type { EventFilters, EventResponse, EventStatsResponse, PageResponse, TimeseriesPoint } from '../types'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080'
 const DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss'
@@ -45,20 +45,24 @@ export function fetchEventPage(
   })
 }
 
-export function fetchEventSample(filters: EventFilters, size = 300): Promise<PageResponse<EventResponse>> {
-  return getJson<PageResponse<EventResponse>>('/api/events', {
-    ...searchParams(filters),
-    page: 0,
-    size,
-    sort: 'occurredAt,asc',
-  })
-}
-
 export function fetchStats(filters: EventFilters): Promise<EventStatsResponse> {
   return getJson<EventStatsResponse>('/api/events/stats', {
     appId: filters.appId || undefined,
     from: searchParams(filters).from,
   })
+}
+
+/** 요청 타입만 집계된다(서버 계약). type·uri 필터는 반영되지 않는다. */
+export function fetchTimeseries(filters: EventFilters, bucketSeconds: number): Promise<TimeseriesPoint[]> {
+  return getJson<TimeseriesPoint[]>('/api/events/timeseries', {
+    appId: filters.appId || undefined,
+    from: searchParams(filters).from,
+    bucketSeconds,
+  })
+}
+
+export function fetchTrace(traceId: string): Promise<EventResponse[]> {
+  return getJson<EventResponse[]>(`/api/traces/${encodeURIComponent(traceId)}`)
 }
 
 export function fetchApps(): Promise<string[]> {

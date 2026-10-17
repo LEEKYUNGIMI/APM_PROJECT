@@ -14,7 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-@Table(name = "events")
+@Table(name = "events", indexes = {
+        @Index(name = "idx_events_trace_id", columnList = "trace_id"),
+        @Index(name = "idx_events_occurred_at", columnList = "occurred_at")
+})
 public class Event {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +28,7 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private EventType type;
 
+    @Column(length = 1000)
     private String uri;
 
     private String method;
@@ -33,9 +37,25 @@ public class Event {
 
     private int durationMs;
 
+    @Column(length = 2000)
     private String message;
 
     private String serverIp;
 
     private LocalDateTime occurredAt;
+
+    @Column(length = 32)
+    private String traceId;
+
+    @Column(length = 16)
+    private String spanId;
+
+    @Column(length = 16)
+    private String parentSpanId;
+
+    private long startTimeMs;
+
+    private Long startTimeUs;
+
+    private Long durationUs;
 }

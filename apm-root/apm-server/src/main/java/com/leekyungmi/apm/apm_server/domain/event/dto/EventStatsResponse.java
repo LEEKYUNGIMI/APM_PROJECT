@@ -11,6 +11,8 @@ import java.util.Map;
 public class EventStatsResponse {
     private long totalCount;
     private double avgDurationMs;
+    private double p95DurationMs;
+    private double p99DurationMs;
     private double errorRatePercent;
     private Map<EventType, Long> countByType;
 }

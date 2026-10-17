@@ -3,8 +3,10 @@ import type { EventStatsResponse } from '../types'
 
 const COLORS: Record<string, string> = {
   HTTP_REQUEST: '#38bdf8',
-  SLOW_QUERY: '#fbbf24',
+  SLOW_REQUEST: '#fbbf24',
   ERROR: '#f87171',
+  DB_QUERY: '#a78bfa',
+  HTTP_CLIENT: '#34d399',
 }
 
 export function EventTypeChart({ countByType }: { countByType: EventStatsResponse['countByType'] | null }) {

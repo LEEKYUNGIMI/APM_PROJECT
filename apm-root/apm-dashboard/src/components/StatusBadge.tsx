@@ -2,8 +2,10 @@ import type { EventType } from '../types'
 
 const TYPE_LABEL: Record<EventType, string> = {
   HTTP_REQUEST: 'REQUEST',
-  SLOW_QUERY: 'SLOW',
+  SLOW_REQUEST: 'SLOW',
   ERROR: 'ERROR',
+  DB_QUERY: 'DB',
+  HTTP_CLIENT: 'CLIENT',
 }
 
 export function EventTypeBadge({ type }: { type: EventType }) {

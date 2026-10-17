@@ -8,9 +8,10 @@ interface EventTableProps {
   loading: boolean
   onPrev: () => void
   onNext: () => void
+  onSelectTrace: (traceId: string) => void
 }
 
-export function EventTable({ page, loading, onPrev, onNext }: EventTableProps) {
+export function EventTable({ page, loading, onPrev, onNext, onSelectTrace }: EventTableProps) {
   const isEmpty = !loading && (page?.content.length ?? 0) === 0
 
   return (
@@ -31,7 +32,12 @@ export function EventTable({ page, loading, onPrev, onNext }: EventTableProps) {
           </thead>
           <tbody>
             {page?.content.map((event) => (
-              <tr key={event.id}>
+              <tr
+                key={event.id}
+                className={event.traceId ? 'event-table__row--clickable' : undefined}
+                onClick={event.traceId ? () => onSelectTrace(event.traceId as string) : undefined}
+                title={event.traceId ? '클릭하면 트레이스를 봅니다' : undefined}
+              >
                 <td className="mono">{dayjs(event.occurredAt).format('MM/DD HH:mm:ss')}</td>
                 <td>{event.appId}</td>
                 <td>

@@ -24,6 +24,12 @@ public class EventRequest {
     private String message;
     private String serverIp;
     private LocalDateTime occurredAt;
+    private String traceId;
+    private String spanId;
+    private String parentSpanId;
+    private long startTimeMs;
+    private Long startTimeUs;
+    private Long durationUs;
 
     public Event toEntity(){
         return Event.builder()
@@ -36,6 +42,12 @@ public class EventRequest {
                 .message(message)
                 .serverIp(serverIp)
                 .occurredAt(occurredAt)
+                .traceId(traceId)
+                .spanId(spanId)
+                .parentSpanId(parentSpanId)
+                .startTimeMs(startTimeMs)
+                .startTimeUs(startTimeUs)
+                .durationUs(durationUs)
                 .build();
     }
 
